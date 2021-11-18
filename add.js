@@ -1,9 +1,12 @@
 import mongoose from 'mongoose';
 
-const crudCommand = 'read';
+const crudCommand = 'create';
+
+
 
 mongoose.connect("mongodb://localhost:27017/appcrud");
 const db = mongoose.connection;
+
 
 db.once("open", err => {
 	if (err) console.log('ERROR ON CONNECTION OPEN');

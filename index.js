@@ -2,11 +2,7 @@ import mongoose from 'mongoose';
 
 const crudCommand = 'add';
 
-mongoose.connect("mongodb://localhost:27017/api001", {
-	useUnifiedTopology: true,
-	useNewUrlParser: true
-});
-
+mongoose.connect("mongodb://localhost:27017/api001");
 const db = mongoose.connection;
 
 db.once("open", err => {
@@ -18,7 +14,7 @@ db.once("open", err => {
 		user: String,
 		email: String
 	});
-	const userModel = mongoose.model("userModel", userSchema, "users100");
+	const userModel = mongoose.model("user", userSchema);
 
 	switch (crudCommand) {
 		case 'add':

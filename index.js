@@ -1,36 +1,55 @@
 import mongoose from 'mongoose';
 
-const crudCommand = 'add';
+const crudCommand = 'create';
 
-mongoose.connect("mongodb://localhost:27017/appcrud");
-const db = mongoose.connection;
+const connectToMongo = async () => {
+	await mongoose.connect("mongodb://localhost:27017/appcrud");
+	return mongoose;
+}
 
-db.once("open", err => {
-	if (err) console.log('ERROR ON CONNECTION OPEN');
-	else console.log('connection open');
+(async () => {
+	await connectToMongo();
+	console.log('connection open');
 
 	const userSchema = mongoose.Schema({
 		name: String,
-		user: String,
-		email: String
+		username: { type: String, required: true },
+		email: String,
+		age: Number
 	});
 	const userModel = mongoose.model("user", userSchema);
 
 	switch (crudCommand) {
-		case 'add':
-			const user1 = new userModel({ name: "Timo Albrecht", username: "talbrecht", email: "talbrecht@gmail.com" });
+		case 'create':
+			const user1 = new userModel({ name: "Thomas Albrecht", username: "talbrecht3", email: "talbrecht@gmail.com", age: 34 });
 
-			user1.save((err, doc) => {
-				if (err) return console.log(err);
-				console.log('user inserted: ' + user1.name);
+			user1.save(err => {
+				if (err) console.log(err);
+				else console.log('user inserted: ' + user1.name);
 				closeConnection();
 			});
+			break;
+		case 'read':
+			const users = await userModel.find({});
+			users.forEach(user => console.log(user.name));
+			closeConnection();
+			break;
+		case 'update':
+			await userModel.findOneAndUpdate({ username: "talbrecht3" }, { $set: { email: "newmail" } });
+			console.log('user updated');
+			closeConnection();
+			break;
+		case 'delete':
+			await userModel.deleteOne({ username: "talbrecht2" });
+			console.log('user deleted');
+			closeConnection();
 			break;
 		default:
 			console.log('BAD COMMAND: ' + crudCommand);
 			closeConnection();
+			break;
 	}
-});
+})();
 
 function closeConnection() {
 	mongoose.connection.close(err => {

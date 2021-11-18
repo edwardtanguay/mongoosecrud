@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const crudCommand = 'addx';
+const crudCommand = 'add';
 
 mongoose.connect("mongodb://localhost:27017/api001", {
 	useUnifiedTopology: true,
@@ -22,7 +22,7 @@ db.once("open", err => {
 
 	switch (crudCommand) {
 		case 'add':
-			const user1 = new userModel({ name: "Jason Newbie777", username: "jasonnew", email: "jn@gmail.com" });
+			const user1 = new userModel({ name: "Timo Albrecht", username: "talbrecht", email: "talbrecht@gmail.com" });
 
 			user1.save((err, doc) => {
 				if (err) return console.log(err);
@@ -31,14 +31,14 @@ db.once("open", err => {
 			});
 			break;
 		default:
-			console.log('bad comment: ' + crudCommand);
+			console.log('BAD COMMAND: ' + crudCommand);
 			closeConnection();
 	}
 });
 
 function closeConnection() {
 	mongoose.connection.close(err => {
-		if (err) console.log('ERROR ON DATABASE CLOSE');
-		else console.log('database closed');
+		if (err) console.log('ERROR ON CONNECTION CLOSE');
+		else console.log('connection closed');
 	});
 }

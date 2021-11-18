@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const crudCommand = 'update';
+const crudCommand = 'delete';
 
 const connectToMongo = async () => {
 	await mongoose.connect("mongodb://localhost:27017/appcrud");
@@ -40,7 +40,8 @@ const connectToMongo = async () => {
 			closeConnection();
 			break;
 		case 'delete':
-			console.log('TODO: DELETE');
+			await userModel.deleteOne({ username: "talbrecht2" });
+			console.log('user deleted');
 			closeConnection();
 			break;
 		default:

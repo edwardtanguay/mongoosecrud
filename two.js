@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const crudCommand = 'read';
+const crudCommand = 'update';
 
 const connectToMongo = async () => {
 	await mongoose.connect("mongodb://localhost:27017/appcrud");
@@ -21,7 +21,7 @@ const connectToMongo = async () => {
 
 	switch (crudCommand) {
 		case 'create':
-			const user1 = new userModel({ name: "Thomas Albrecht", username: "talbrecht", email: "talbrecht@gmail.com", age: 34 });
+			const user1 = new userModel({ name: "Thomas Albrecht", username: "talbrecht3", email: "talbrecht@gmail.com", age: 34 });
 
 			user1.save(err => {
 				if (err) console.log(err);
@@ -35,7 +35,8 @@ const connectToMongo = async () => {
 			closeConnection();
 			break;
 		case 'update':
-			console.log('TODO: UPDATE');
+			await userModel.findOneAndUpdate({ username: "talbrecht3" }, { $set: { email: "newmail" } });
+			console.log('user updated');
 			closeConnection();
 			break;
 		case 'delete':

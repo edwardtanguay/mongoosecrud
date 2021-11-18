@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const crudCommand = 'create';
+const crudCommand = 'read';
 
 mongoose.connect("mongodb://localhost:27017/appcrud");
 const db = mongoose.connection;
@@ -11,7 +11,7 @@ db.once("open", err => {
 
 	const userSchema = mongoose.Schema({
 		name: String,
-		username: {type: String, required: true}, 
+		username: { type: String, required: true },
 		email: String,
 		age: Number
 	});
@@ -19,7 +19,7 @@ db.once("open", err => {
 
 	switch (crudCommand) {
 		case 'create':
-			const user1 = new userModel({ name: "Thomas Albrecht", username: "talbrecht",  email: "talbrecht@gmail.com", age: 34});
+			const user1 = new userModel({ name: "Thomas Albrecht", username: "talbrecht", email: "talbrecht@gmail.com", age: 34 });
 
 			user1.save(err => {
 				if (err) console.log(err);
@@ -28,7 +28,16 @@ db.once("open", err => {
 			});
 			break;
 		case 'read':
-			console.log('TODO: READ');
+			(async () => {
+				const users = new userModel();
+				const all = await userModel.find({});
+				console.log(all);
+			})();
+
+
+			// users.find({}, (err, docs) => {
+			// 	console.log(docs);
+			// })
 			closeConnection();
 			break;
 		case 'update':

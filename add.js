@@ -9,6 +9,13 @@ db.once("open", err => {
 	if (err) console.log('ERROR ON CONNECTION OPEN');
 	else console.log('connection open');
 
+	const userSchema = mongoose.Schema({
+		name: String,
+		username: String,
+		email: String
+	});
+	const userModel = mongoose.model("user", userSchema);
+
 	switch (crudCommand) {
 		case 'create':
 			console.log('TODO: CREATE');
@@ -18,8 +25,8 @@ db.once("open", err => {
 			console.log('TODO: READ');
 			closeConnection();
 			break;
-		case 'add':
-			console.log('TODO: ADD');
+		case 'update':
+			console.log('TODO: UPDATE');
 			closeConnection();
 			break;
 		case 'delete':

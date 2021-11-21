@@ -2,13 +2,8 @@ import mongoose from 'mongoose';
 
 const crudCommand = 'create';
 
-const connectToMongo = async () => {
-	await mongoose.connect("mongodb://localhost:27017/appcrud");
-	return mongoose;
-}
-
 (async () => {
-	await connectToMongo();
+	await mongoose.connect("mongodb://localhost:27017/appcrud");
 	console.log('connection open');
 
 	const userSchema = mongoose.Schema({
